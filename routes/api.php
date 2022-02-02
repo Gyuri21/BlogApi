@@ -17,14 +17,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group( ["middleware" => ["auth:sanctum"]], function(){
+    Route::post("/logout",[AuthController::class,"logout"]);
+    Route::post("/blogs",[BlogsController::class,"store"]);
+    Route::put("/blogs/{blog}",[BlogsController::class,"update"]);
+    Route::delete("/blogs/{id}",[BlogsController::class,"destroy"]);
 });
+
 Route::post("/register",[AuthController::class,"signup"]);
 Route::post("/login",[AuthController::class,"signin"]);
-Route::post("/logout",[AuthController::class,"logout"]);
 Route::get("/blogs",[BlogsController::class,"index"]);
-Route::post("/blogs",[BlogsController::class,"store"]);
 Route::get("/blogs/{id}",[BlogsController::class,"show"]);
-Route::put("/blogs/{blog}",[BlogsController::class,"update"]);
-Route::delete("/blogs/{id}",[BlogsController::class,"destroy"]);
