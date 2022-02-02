@@ -51,10 +51,8 @@ class BlogsController extends BaseController
 
         return $this->sendResponse(new BlogResources($blog),"Poszt módosítva");
     }
-    public function destroy(Blog $blog){
-        $blog->delete();
-
+    public function destroy($id){
+        Blog::destroy($id);
         return $this->sendResponse([],"Poszt törölve");
-
     }
 }

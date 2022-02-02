@@ -18,7 +18,7 @@ class AuthController extends BaseController {
             "password" => "required",
             "confirmed_password" => "required|same:password"
         ]);
-        if($validator){
+        if($validator->fails()){
             return $this->sendError("Validálási hiba",$validator->errors());
         }
         $input = $request->all();
@@ -28,10 +28,10 @@ class AuthController extends BaseController {
 
         return $this->sendResponse($success,"Sikeres regisztráció");
     }
-    public function singin(Request $request){
-        if(Auth::attempt(["email"=>$request->email,"password" => $request->password])){
+    public function signin(Request $request){
+        if(Auth::attempt(["email"=>$request->email,"password" =>$request->password])){
             $authUser = Auth::user();
-            $success["token"]= $authUser->createTtoken("myapitoken")->plainTextToken;
+            $success["token"]= $authUser->createToken("myapitoken")->plainTextToken;
             $success["name"] = $authUser->name;
 
             return $this->sendResponse($success,"Sikeres bejelentkezés");

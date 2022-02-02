@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,9 @@ use App\Http\Controllers\BlogsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post("/register",[AuthController::class,"signup"]);
+Route::post("/login",[AuthController::class,"signin"]);
+Route::post("/logout",[AuthController::class,"logout"]);
 Route::get("/blogs",[BlogsController::class,"index"]);
 Route::post("/blogs",[BlogsController::class,"store"]);
 Route::get("/blogs/{id}",[BlogsController::class,"show"]);
